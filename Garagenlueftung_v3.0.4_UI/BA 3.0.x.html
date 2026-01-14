@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Garagenlüftung – Bedienungsanleitung Teil A</title>
+
+<style>
+body{
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  margin:0;
+  background:#eef3f7;
+  color:#0f172a;
+  line-height:1.7;
+}
+header{
+  background:#0ea5e9;
+  color:#fff;
+  padding:24px;
+  text-align:center;
+}
+header h1{margin:0;font-size:2em}
+header p{margin:.4em 0 0}
+
+main{
+  max-width:900px;
+  margin:0 auto;
+  padding:20px;
+}
+section{
+  background:#fff;
+  margin:18px 0;
+  padding:22px;
+  border-radius:14px;
+  box-shadow:0 6px 14px rgba(0,0,0,.08);
+}
+h2{
+  margin-top:0;
+  color:#0ea5e9;
+}
+h3{margin-bottom:6px}
+.note{
+  background:#f8fafc;
+  border-left:6px solid #0ea5e9;
+  padding:14px 16px;
+  margin:16px 0;
+  border-radius:8px;
+}
+.warn{
+  background:#fef3c7;
+  border-left:6px solid #f59e0b;
+}
+footer{
+  text-align:center;
+  padding:20px;
+  color:#475569;
+  font-size:.9em;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Garagenlüftung</h1>
+  <p>Bedienungsanleitung – Teil A (Anwender)</p>
+  <p>Firmware v3.0.4</p>
+</header>
+
+<main>
+
+<section>
+<h2>1. Zweck und Grundidee der Garagenlüftung</h2>
+
+<p>
+Die Garagenlüftung ist ein automatisches System zur kontrollierten Entlüftung einer Garage nach dem Parkieren eines Fahrzeugs.
+Sie steuert dabei zwei zentrale Komponenten:
+</p>
+
+<ul>
+  <li>das Garagentor (Teilöffnung, Offenhalten, Schließen)</li>
+  <li>einen Lüfter zur Abführung von Abgasen, Feuchtigkeit und Gerüchen</li>
+</ul>
+
+<p>
+Ziel des Systems ist es, die Garage zuverlässig zu entlüften und gleichzeitig eine möglichst einfache und sichere Bedienung zu gewährleisten.
+</p>
+
+<p>
+Die Bedienung ist bewusst so ausgelegt, dass im Alltag keine Einstellungen erforderlich sind.
+Im Normalfall genügt ein einziger Bedienvorgang: <b>Start</b>.
+</p>
+</section>
+
+<section>
+<h2>2. Bedienphilosophie – „Start statt Einstellen“</h2>
+
+<p>
+Ein zentrales Konzept der Garagenlüftung ist es, die tägliche Bedienung auf ein Minimum zu reduzieren.
+</p>
+
+<div class="note">
+<b>Nicht ständig einstellen – sondern zuverlässig starten.</b>
+</div>
+
+<p>
+Die Lüftungszeit ist vordefiniert, wird deutlich angezeigt und muss im Normalbetrieb nicht angepasst werden.
+Presets dienen der Grundkonfiguration, nicht der täglichen Bedienung.
+</p>
+
+<p>
+Das System ist so ausgelegt, dass mehrere Personen es bedienen können, auch ohne technisches Vorwissen.
+</p>
+</section>
+
+<section>
+<h2>3. Die Startseite – Überblick und Bedeutung der Anzeigen</h2>
+
+<p>
+Die Startseite des Web-Interfaces ist die wichtigste Ansicht des Systems.
+Sie zeigt jederzeit:
+</p>
+
+<ul>
+  <li>was gerade passiert</li>
+  <li>wie lange es noch dauert</li>
+  <li>welche Lüftungszeit aktiv ist</li>
+</ul>
+
+<h3>Statusanzeige</h3>
+<ul>
+  <li><b>IDLE</b> – System ist bereit</li>
+  <li><b>TOR → LÜFTUNG</b> – Tor bewegt sich</li>
+  <li><b>LÜFTET</b> – Lüfter läuft</li>
+  <li><b>TOR OFFEN</b> – Offenhaltephase</li>
+  <li><b>TOR SCHLIESST</b> – Rückfahrt</li>
+  <li><b>FERTIG</b> – Vorgang abgeschlossen</li>
+</ul>
+
+<h3>Restzeitanzeige</h3>
+<p>
+Die Restzeit zeigt an, wie lange der aktuelle Schritt noch dauert.
+</p>
+
+<h3>Netzwerkinformation</h3>
+<p>
+IP-Adresse und WLAN-Informationen dienen nur zur Orientierung und sind für die tägliche Bedienung nicht relevant.
+</p>
+</section>
+
+<section>
+<h2>4. Vorgewählte Lüftungszeit – der wichtigste Wert</h2>
+
+<div class="note">
+<b>Wie lange wird die Garage gelüftet, wenn ich jetzt Start drücke?</b>
+</div>
+
+<p>
+Diese Zeit ist der zentrale Wert der Bedienung.
+Sie stammt aus einem Preset und bleibt konstant, bis sie bewusst geändert wird.
+</p>
+
+<p>
+Im Alltag ist eine Änderung dieser Zeit normalerweise nicht erforderlich.
+</p>
+</section>
+
+<section>
+<h2>5. Starten eines Lüftungsvorgangs</h2>
+
+<p>
+Durch Drücken von <b>▶ Start</b>:
+</p>
+
+<ul>
+  <li>öffnet das Tor automatisch in die Lüftungsposition</li>
+  <li>startet der Lüfter</li>
+  <li>läuft der komplette Zyklus selbstständig ab</li>
+</ul>
+
+<p>
+Es ist kein weiteres Eingreifen erforderlich.
+</p>
+</section>
+
+<section>
+<h2>6. Abbrechen eines laufenden Vorgangs</h2>
+
+<p>
+Während ein Lüftungsvorgang läuft, kann jederzeit <b>⛔ Abbrechen</b> gedrückt werden.
+</p>
+
+<ul>
+  <li>Lüfter wird sofort ausgeschaltet</li>
+  <li>Tor fährt in sichere Grundstellung</li>
+  <li>System geht zurück in den Zustand „bereit“</li>
+</ul>
+
+<p>
+Abbrechen ist jederzeit erlaubt und dient der Sicherheit.
+</p>
+</section>
+
+<section>
+<h2>7. Presets – Bedeutung und richtige Verwendung</h2>
+
+<p>
+Presets sind gespeicherte Lüftungszeiten.
+Sie dienen der Grundkonfiguration und sind keine tägliche Bedienfunktion.
+</p>
+
+<div class="note warn">
+Preset-Änderungen sind nur möglich, wenn kein Lüftungsvorgang läuft.
+</div>
+</section>
+
+<section>
+<h2>8. Anzeige am Gerät (OLED-Display)</h2>
+
+<p>
+Das Gerät verfügt über ein integriertes OLED-Display, das jederzeit den aktuellen Zustand anzeigt.
+</p>
+
+<ul>
+  <li><b>Zeile 1:</b> Gerätename</li>
+  <li><b>Zeile 2:</b> Aktives Preset und Lüftungszeit</li>
+  <li><b>Zeile 3:</b> Status oder Restzeit</li>
+  <li><b>Zeile 4:</b> Netzwerkstatus (IP / AP / offline)</li>
+</ul>
+
+<p>
+Die Anzeige dient der schnellen Kontrolle direkt am Gerät.
+</p>
+</section>
+
+<section>
+<h2>9. Tasten am Gerät</h2>
+
+<h3>Start-Taste</h3>
+<p>Startet einen Lüftungsvorgang (identisch zum Web-Start).</p>
+
+<h3>Abbruch-Taste</h3>
+<p>Bricht einen laufenden Vorgang sofort ab.</p>
+
+<h3>MODE-Taste</h3>
+<p>
+Wechselt im Stillstand zyklisch zwischen den Presets (P1 → P2 → P3 → P4).
+</p>
+
+<h3>Setup-Taste</h3>
+<p>
+Wird nur beim Einschalten ausgewertet und erzwingt den Setup-Modus.
+Keine tägliche Bedienfunktion.
+</p>
+</section>
+
+<section>
+<h2>10. Typische Alltagssituationen</h2>
+
+<ul>
+  <li><b>Auto parkiert:</b> Start drücken</li>
+  <li><b>Fehlstart:</b> Abbrechen drücken</li>
+  <li><b>Stromausfall:</b> System startet sicher neu</li>
+</ul>
+</section>
+
+<section>
+<h2>11. Wichtige Hinweise</h2>
+
+<ul>
+  <li>Presets nur bewusst ändern</li>
+  <li>Während eines Zyklus keine Änderungen möglich</li>
+  <li>Anzeige zeigt jederzeit den Zustand</li>
+</ul>
+</section>
+
+<section>
+<h2>12. Zusammenfassung für Anwender</h2>
+
+<ul>
+  <li>▶ Start ist die normale Bedienung</li>
+  <li>⛔ Abbrechen ist jederzeit möglich</li>
+  <li>OLED zeigt Status und Restzeit</li>
+  <li>Tasten erlauben Bedienung ohne Web-Interface</li>
+</ul>
+</section>
+
+</main>
+
+<footer>
+Garagenlüftung · Bedienungsanleitung Teil A · Firmware v3.0.4 · © 2026 EuS Soft
+</footer>
+
+</body>
+</html>
