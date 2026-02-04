@@ -1,5 +1,31 @@
 # Changelog – Garagenlüftung Firmware
 
+Alle relevanten Änderungen an der Firmware werden hier dokumentiert.  
+Versionen folgen dem Schema **MAJOR.MINOR.PATCH**.
+
+---
+
+## v3.0.6 – 2026-02-04
+
+### 🔧 Änderungen
+- **Hardware-Pin angepasst**
+  - Bisher: **PIN 10**
+  - Neu: **PIN 0**
+  - Grund: Konflikt mit **WLED** (Pin 10 bereits belegt)
+- **Versionsunabhängige Source-Struktur eingeführt**
+  - Gemeinsamer, zentraler Quellcode statt versionsspezifischer Ordner
+  - Erleichtert Wartung und zukünftige Releases
+
+### 📝 Korrekturen
+- **Orthografie- und Bezeichnerfehler** im Code und in der UI korrigiert
+
+### 🧹 Repository-Pflege
+- **Build-Artefakte entfernt**
+  - `.bin`, `.elf`, `.map`, `bootloader.bin`, `partitions.bin`
+- `.gitignore` ergänzt, damit Build-Dateien künftig nicht mehr eingecheckt werden
+
+---
+
 ## v3.0.5 – 2026-02-01
 
 ### 🛠️ Fixes & Verbesserungen
@@ -34,4 +60,13 @@
 - Neuer Status: **STOP → SCHLIESSEN**
 - Konsistente Anzeige in Web, MQTT und Display
 
-### 🔒 Stabilitä
+---
+
+## v3.0.4 – 2026-01-14
+
+### 🚀 Initiale Version
+- Zeitgesteuerte Garagenlüftung
+- Web-UI zur Konfiguration
+- MQTT-Anbindung
+- Display-Unterstützung (SSD1306)
+- Manuelle Steuerung per Taster
