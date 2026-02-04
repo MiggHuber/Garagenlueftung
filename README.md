@@ -37,3 +37,8 @@ Garagenlueftung/
 ├─ .gitignore                  # Ignoriert Build-Artefakte
 ├─ Changelog.md                # Versionshistorie
 └─ README.md                   # Diese Datei
+
+
+### 🔄 OTA (Over-the-Air Update)
+- OTA-Update weiterhin unterstützt
+- Empfehlung: Update auf v3.0.6 wegen Hardware-Fix (GPIO 0)
