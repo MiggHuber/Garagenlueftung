@@ -22,6 +22,54 @@ Das Projekt steuert ein Garagentor so, dass es:
 
 ---
 
+# Garagenlüftung – Firmware v3.0.7
+
+ESP32-basierte Steuerung für **Garagentor + Lüfter**  
+mit Web-UI, MQTT (Home Assistant), Hardware-Tastern und HTTP-Steuerung.
+
+---
+
+## ✨ Features
+
+- 🚪 Garagentorsteuerung (Impulsbetrieb)
+- 🌬️ Lüftersteuerung (GPIO oder Shelly)
+- ⏱️ Zeitgesteuerter Lüftungszyklus
+- 🎛️ Presets (4 Profile)
+- 🖥️ Modernes Web-UI
+- 📡 MQTT & Home Assistant Discovery
+- 🌐 HTTP-Steuerung (auch ohne MQTT)
+- 🔁 OTA Firmware Update
+- 🧠 Ausfallsicherer AP-Setup-Modus
+
+---
+
+## 🆕 Neu in v3.0.7 – „Öffnen“
+
+### 🚪 Tor öffnen (ohne Zyklus)
+Ein separater Befehl zum **reinen Öffnen des Garagentors**:
+
+- kein Lüfter
+- kein Timer
+- kein Zyklus
+- sofortige Ausführung
+
+Ideal, um das Tor **aus der Wohnung heraus** zu öffnen.
+
+---
+
+## 🔘 Bedienung
+
+### Web-UI
+- `▶ Start` – Startet Lüftungszyklus
+- `⛔ Abbrechen` – Bricht laufenden Zyklus ab
+- `🚪 Öffnen` – Nur Torimpuls
+
+### HTTP (ohne MQTT)
+```http
+GET  http://<IP>/open
+POST http://<IP>/open
+
+
 ## 🧱 Projektstruktur (ab v3.0.6)
 
 ```text

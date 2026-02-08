@@ -2,6 +2,55 @@
 
 Alle relevanten Änderungen an der Firmware werden hier dokumentiert.  
 Versionen folgen dem Schema **MAJOR.MINOR.PATCH**.
+# Changelog – Garagenlüftung
+
+## v3.0.7 – 2026-03-01
+### Neu
+- ➕ **Separater „Öffnen“-Befehl**
+  - Löst **nur einen Torimpuls** aus
+  - Kein Lüfter, kein Zyklus
+  - Ideal zum Öffnen aus der Wohnung (nicht draußen warten)
+
+- 🌐 **HTTP-Endpunkt `/open`**
+  - `GET /open` oder `POST /open`
+  - Direkte Auslösung ohne MQTT
+  - Für Kunden ohne Home Assistant / MQTT geeignet
+
+- 🧠 **Priorisierte OPEN-Verarbeitung**
+  - `/open` wird sofort ausgeführt
+  - Unabhängig von laufendem Zyklus, UI oder MQTT
+  - Vermeidet Verzögerungen bei hoher Last
+
+- 🏠 **Home Assistant**
+  - Neuer MQTT-Discovery Button: *„Garagentor Öffnen“*
+  - Eigene Entity, unabhängig von Start/Abbrechen
+
+- 🖥️ **Web-UI**
+  - Neuer Button **🚪 Öffnen**
+  - Immer verfügbar
+  - Führt exakt denselben Torimpuls aus wie MQTT / HTTP
+
+### Verhalten
+- Wird **OPEN während eines Zyklus** ausgelöst:
+  - Zyklus wird sauber abgebrochen
+  - Lüfter aus
+  - Torimpuls wird sofort ausgeführt
+
+### Technisch
+- Einführung eines internen `openRequested`-Flags
+- Einheitliche Logik für:
+  - Hardware-Taster
+  - MQTT
+  - Web-UI
+  - HTTP
+
+---
+
+## v3.0.6
+- UI-Redesign mit Fokus auf „Start“
+- Preset-Änderung während Zyklus gesperrt
+- Verbesserte Status- und Restzeitanzeige
+- MQTT Discovery stabilisiert
 
 ---
 

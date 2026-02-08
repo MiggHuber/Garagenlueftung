@@ -1,5 +1,5 @@
 /*
-  Garagenlueftung – Firmware v3.0.6 (aus Version 2.2.b mit Shelly Output)
+  Garagenlueftung – Firmware v3.0.7 (aus Version 2.2.b mit Shelly Output)
   AP über Pin 1 definierbar
   Pin 0 als Mode Umschaltung (alt Pin 10)
   © 2026 EuS Soft, 9428 Walzenhausen
@@ -35,7 +35,7 @@ String pageManual();
 // =======================================================
 static const char* FW_NAME      = "Garagenlueftung";
 // x.x.ab 6 Pin 0 als Modepin Pin 10 in alter Charge vpn Controllern
-static const char* FW_VERSION = "v3.0.6";
+static const char* FW_VERSION = "v3.0.7";
 static const char* FW_DATE    = "2026-03-01";
 static const char* FW_COPYRIGHT = "© 2026 EuS Soft, 9428 Walzenhausen";
 
@@ -296,12 +296,9 @@ unsigned long lastModeBtnMs = 0;
 
 WebServer server(80);
 
-// =======================================================
-// MQTT
-// =======================================================
 WiFiClient espClient;
 PubSubClient mqtt(espClient);
-
+volatile bool openRequested = false;
 String topicBase;
 String topicCmd;
 String topicStatus;
@@ -728,6 +725,19 @@ void abortCycle() {
   stateUntilMs = 0;
 }
 
+// =======================================================
+// OPEN: nur Torimpuls, kein Lüfter
+// =======================================================
+void openTor() {
+  if (cycleRunning) {
+    abortCycle();
+  }
+  luefter(false);
+  pulseTor();
+  state = CycleState::IDLE;
+  stateUntilMs = 0;
+}
+
 
 void startCycle() {
   if (cycleRunning) return;
@@ -896,6 +906,7 @@ void mqttCallback(char* topic, byte* payload, unsigned int length) {
   if (t == topicCmd) {
     if (msg == "start") startCycle();
     else if (msg == "stop") abortCycle();
+    else if (msg == "open") openRequested = true;
     return;
   }
 
@@ -1021,6 +1032,23 @@ payloadAbortBtn += "\"unique_id\":\"" + id + "_abort_btn\"";
 payloadAbortBtn += "}";
 
 mqtt.publish(topicAbortBtn.c_str(), payloadAbortBtn.c_str(), true);
+
+// ==================================================
+ // === Button: Tor öffnen
+ // ==================================================
+  String topicOpenBtn = base + "/button/" + id + "/open/config";
+  String payloadOpenBtn = "{";
+  payloadOpenBtn += deviceJson;
+  payloadOpenBtn += "\"name\":\"Garagentor Öffnen\",";
+  payloadOpenBtn += "\"command_topic\":\"" + topicCmd + "\",";
+  payloadOpenBtn += "\"payload_press\":\"open\",";
+  payloadOpenBtn += "\"availability_topic\":\"" + topicAvail + "\",";
+  payloadOpenBtn += "\"payload_available\":\"online\",";
+  payloadOpenBtn += "\"payload_not_available\":\"offline\",";
+  payloadOpenBtn += "\"unique_id\":\"" + id + "_open_btn\"";
+  payloadOpenBtn += "}";
+
+  mqtt.publish(topicOpenBtn.c_str(), payloadOpenBtn.c_str(), true);
 
   // ==================================================
   // === Sensor: Status
@@ -1389,7 +1417,12 @@ String pageStatus() {
 
   // 👉 Action Button (leer, wird per JS gesetzt)
   h += "<div id='actionBtn'></div>";
-
+  
+  // OPEN Button (immer verfügbar)
+  h += "<form method='POST' action='/open'>";
+  h += "<button class='secondary'>🚪 Öffnen</button>";
+  h += "</form>";
+  
   // Preset-Auswahl
   h += "<hr>";
   h += "<form onsubmit='return false;' class='rowline'>";
@@ -1652,7 +1685,7 @@ String pageWifi() {
 String pageManual() {
   String h;
   h += F("<!doctype html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width'>");
-  h += F("<title>Garagenlüftung Bedienungsanleitung v3.0.6</title>");
+  h += F("<title>Garagenlüftung Bedienungsanleitung v3.0.7</title>");
   h += F("<style>"
          "body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;padding:0;background:#eef3f7;color:#0f172a;}"
          "header{background:#0ea5e9;color:#fff;padding:16px;text-align:center;}"
@@ -1668,13 +1701,13 @@ String pageManual() {
          "footer{text-align:center;color:#475569;padding:14px;font-size:0.9em;}"
          "</style></head><body>");
 
-  h += F("<header><h1>Garagenlüftung <span class='badge'>v3.0.6</span> <span class='badge'>2026-01-10</span></h1>"
+  h += F("<header><h1>Garagenlüftung <span class='badge'>v3.0.7</span> <span class='badge'>2026-01-10</span></h1>"
          "<p>© 2026 EuS Soft, 9428 Walzenhausen</p></header><main>");
 
   h += F("<section><h2>Überblick</h2>"
          "<p>Die <b>Garagenlüftung</b> steuert ein Garagentor und einen Lüfter zeitgesteuert über einen ESP32-Controller."
          " Sie kann sowohl über Hardwaretasten, das <b>Web-UI</b> als auch per <b>MQTT / Home Assistant</b> gesteuert werden.</p>"
-         "<div class='note ok'><b>Neu in Version 3.0.6:</b><ul><li>Start ist die primäre Aktion (direkt nach der angezeigten Lüftungszeit)</li><li>Lüftungszeit wird prominent dargestellt</li><li>Preset-Änderung ist bewusst sekundär (eine Zeile, kleiner Button)</li><li>Preset-Änderung bleibt während Zyklus gesperrt</li></ul></div></section>");
+         "<div class='note ok'><b>Neu in Version 3.0.7:</b><ul><li>Start ist die primäre Aktion (direkt nach der angezeigten Lüftungszeit)</li><li>Lüftungszeit wird prominent dargestellt</li><li>Preset-Änderung ist bewusst sekundär (eine Zeile, kleiner Button)</li><li>Preset-Änderung bleibt während Zyklus gesperrt</li></ul></div></section>");
 
   h += F("<section><h2>Web-Oberfläche</h2>"
          "<ul>"
@@ -1713,7 +1746,7 @@ String pageManual() {
          "<li><b>/manual:</b> Bedienungsanleitung</li>"
          "<li>Support: <a href='mailto:emil.huber@gmx.ch'>emil.huber@gmx.ch</a></li></ul></section>");
 
-  h += F("</main><footer>Garagenlüftung – Firmware v3.0.6 · © 2026 EuS Soft</footer></body></html>");
+  h += F("</main><footer>Garagenlüftung – Firmware v3.0.7 · © 2026 EuS Soft</footer></body></html>");
   return h;
 }
 
@@ -1789,7 +1822,19 @@ void setupWeb() {
     server.send(303);
   });
 
-    server.on("/preset", HTTP_POST, []() {
+  // === OPEN (nur Impuls) ===
+  server.on("/open", HTTP_POST, []() {
+    openRequested = true;
+    server.sendHeader("Location", "/");
+    server.send(303);
+  });
+ // === OPEN (nur Impuls, GET) ===
+   server.on("/open", HTTP_GET, []() {
+     openRequested = true;
+     server.send(200, "text/plain", "OK");
+   });
+  
+   server.on("/preset", HTTP_POST, []() {
     if (!server.hasArg("psel")) {
       server.send(400, "application/json", "{}");
       return;
@@ -2064,7 +2109,12 @@ void loop() {
     server.handleClient();
     delay(1);
   }
-
+   // === HIGH PRIORITY: OPEN ===
+  if (openRequested) {
+    openRequested = false;
+    openTor();
+  }
+  
   server.handleClient();
   loopCycle();
 
