@@ -22,6 +22,35 @@ Das Projekt steuert ein Garagentor so, dass es:
 
 ---
 
+🆕 Neu in v3.0.8 – Startzentrierte Logik
+🌬️ Lüfter startet sofort
+
+Der Lüfter wird nun direkt beim Start des Zyklus aktiviert
+und nicht erst nach Erreichen der Lüftungsposition.
+
+Vorteile:
+
+bessere Luftzirkulation
+schnellerer Feuchtigkeitsabbau
+klareres Startverhalten
+
+🎯 UI-Optimierung
+
+Lüftungszeit prominent dargestellt
+„Start“ ist Hauptaktion
+Preset nur optional darunter
+Preset-Wechsel während Zyklus gesperrt
+automatische UI-Refresh-Logik bei State-Übergang zu IDLE
+
+🚪 OPEN-Befehl stabilisiert
+
+/open unterstützt GET & POST
+MQTT open
+separater Home Assistant Button
+Zyklus wird vorher sauber abgebrochen
+
+---
+
 # Garagenlüftung – Firmware v3.0.7
 
 ESP32-basierte Steuerung für **Garagentor + Lüfter**  

@@ -4,6 +4,35 @@ Alle relevanten Änderungen an der Firmware werden hier dokumentiert.
 Versionen folgen dem Schema **MAJOR.MINOR.PATCH**.
 # Changelog – Garagenlüftung
 
+## v3.0.8 – 2026-02-27
+
+### Neu
+- 🌬️ **Lüfter startet sofort mit Zyklusbeginn**
+  - Lüfter wird bereits während der Torfahrt zur Lüftungsposition aktiviert
+  - Schnellere Luftzirkulation
+  - Klareres Startverhalten
+
+- 🖥️ **UI-Optimierung**
+  - Lüftungszeit prominent dargestellt
+  - „Start“ ist primäre Aktion
+  - Preset-Auswahl visuell reduziert
+  - Automatische UI-Aktualisierung bei State-Wechsel zu IDLE
+
+- 📟 **Display**
+  - Netzwerkstatus-Zeile ergänzt
+  - AP-Client-Anzeige verbessert
+
+### Verbessert
+- MQTT Firmware-Sensor publiziert Version (retained)
+- Stabilere AP-Timeout-Logik
+- Bereinigte interne State-Transitions
+
+### Verhalten
+- OPEN während laufendem Zyklus:
+  - Zyklus wird sauber abgebrochen
+  - Lüfter wird deaktiviert
+  - Torimpuls erfolgt sofort
+  
 ## v3.0.7 – 2026-03-01
 ### Neu
 - ➕ **Separater „Öffnen“-Befehl**
