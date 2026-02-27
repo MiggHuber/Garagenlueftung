@@ -1,5 +1,5 @@
 /*
-  Garagenlueftung – Firmware v3.0.7 (aus Version 2.2.b mit Shelly Output)
+  Garagenlueftung – Firmware v3.0.8 (aus Version 2.2.b mit Shelly Output)
   AP über Pin 1 definierbar
   Pin 0 als Mode Umschaltung (alt Pin 10)
   © 2026 EuS Soft, 9428 Walzenhausen
@@ -35,8 +35,8 @@ String pageManual();
 // =======================================================
 static const char* FW_NAME      = "Garagenlueftung";
 // x.x.ab 6 Pin 0 als Modepin Pin 10 in alter Charge vpn Controllern
-static const char* FW_VERSION = "v3.0.7";
-static const char* FW_DATE    = "2026-03-01";
+static const char* FW_VERSION = "v3.0.8";
+static const char* FW_DATE    = "2026-02-27";
 static const char* FW_COPYRIGHT = "© 2026 EuS Soft, 9428 Walzenhausen";
 
 
@@ -744,6 +744,7 @@ void startCycle() {
 
   cycleRunning = true;
   pulseTor();
+  luefter(true);    // Lüfter ab Start
 
   state = CycleState::MOVING_TO_VENT;
   stateUntilMs = millis() + (unsigned long)(cfg.close_sec * 1000.0f);
@@ -1685,7 +1686,7 @@ String pageWifi() {
 String pageManual() {
   String h;
   h += F("<!doctype html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width'>");
-  h += F("<title>Garagenlüftung Bedienungsanleitung v3.0.7</title>");
+  h += F("<title>Garagenlüftung Bedienungsanleitung v3.0.8</title>");
   h += F("<style>"
          "body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;padding:0;background:#eef3f7;color:#0f172a;}"
          "header{background:#0ea5e9;color:#fff;padding:16px;text-align:center;}"
@@ -1701,14 +1702,20 @@ String pageManual() {
          "footer{text-align:center;color:#475569;padding:14px;font-size:0.9em;}"
          "</style></head><body>");
 
-  h += F("<header><h1>Garagenlüftung <span class='badge'>v3.0.7</span> <span class='badge'>2026-01-10</span></h1>"
+  h += F("<header><h1>Garagenlüftung <span class='badge'>v3.0.8</span> <span class='badge'>2026-02-27</span></h1>"
          "<p>© 2026 EuS Soft, 9428 Walzenhausen</p></header><main>");
 
-  h += F("<section><h2>Überblick</h2>"
-         "<p>Die <b>Garagenlüftung</b> steuert ein Garagentor und einen Lüfter zeitgesteuert über einen ESP32-Controller."
-         " Sie kann sowohl über Hardwaretasten, das <b>Web-UI</b> als auch per <b>MQTT / Home Assistant</b> gesteuert werden.</p>"
-         "<div class='note ok'><b>Neu in Version 3.0.7:</b><ul><li>Start ist die primäre Aktion (direkt nach der angezeigten Lüftungszeit)</li><li>Lüftungszeit wird prominent dargestellt</li><li>Preset-Änderung ist bewusst sekundär (eine Zeile, kleiner Button)</li><li>Preset-Änderung bleibt während Zyklus gesperrt</li></ul></div></section>");
-
+ h += F("<section><h2>Überblick</h2>"
+       "<p>Die <b>Garagenlüftung</b> steuert ein Garagentor und einen Lüfter zeitgesteuert über einen ESP32-Controller."
+       " Sie kann sowohl über Hardwaretasten, das <b>Web-UI</b> als auch per <b>MQTT / Home Assistant</b> gesteuert werden.</p>"
+       "<div class='note ok'><b>Neu in Version 3.0.8:</b><ul>"
+       "<li>Lüfter startet sofort mit Zyklusbeginn</li>"
+       "<li>Start ist die primäre Aktion (direkt nach der angezeigten Lüftungszeit)</li>"
+       "<li>Lüftungszeit wird prominent dargestellt</li>"
+       "<li>Preset-Änderung ist bewusst sekundär (eine Zeile, kleiner Button)</li>"
+       "<li>Preset-Änderung bleibt während Zyklus gesperrt</li>"
+       "</ul></div></section>");
+       
   h += F("<section><h2>Web-Oberfläche</h2>"
          "<ul>"
          "<li><b>/</b> – Status, Preset-Auswahl, Start/Abbrechen</li>"
@@ -1726,7 +1733,7 @@ String pageManual() {
          "<p>Basis: <code>eus/&lt;device&gt;/...</code></p><ul>"
          "<li><code>cmd</code> – start | stop</li>"
          "<li><code>status</code> – aktueller Status</li>"
-         "<li><code>remaining</code> – Restzeit (s)</li>"
+         "<li><code>remaining</code> – Restzeit (Format: M:SS)</li>"
          "<li><code>cfg/preset_sel</code> – aktives Preset</li>"
          "<li><code>set/preset_sel</code> – Preset setzen (1–4)</li>"
          "</ul>"
@@ -1746,7 +1753,7 @@ String pageManual() {
          "<li><b>/manual:</b> Bedienungsanleitung</li>"
          "<li>Support: <a href='mailto:emil.huber@gmx.ch'>emil.huber@gmx.ch</a></li></ul></section>");
 
-  h += F("</main><footer>Garagenlüftung – Firmware v3.0.7 · © 2026 EuS Soft</footer></body></html>");
+  h += F("</main><footer>Garagenlüftung – Firmware v3.0.8 · © 2026 EuS Soft</footer></body></html>");
   return h;
 }
 

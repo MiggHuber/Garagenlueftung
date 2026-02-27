@@ -1,21 +1,22 @@
-# Garagenlüftung – Release v3.0.7
+# Garagenlüftung – Release v3.0.8
 
-Dieses Release bringt eine **neue Öffnen-Funktion** für das Garagentor,
-unabhängig vom Lüftungszyklus.
+Dieses Release optimiert das Startverhalten und verbessert die Benutzeroberfläche.
 
 ## Highlights
-- 🚪 Neuer „Öffnen“-Befehl (nur Torimpuls)
-- 🌐 `/open` HTTP-Endpunkt (auch ohne MQTT nutzbar)
-- 🏠 Neuer Home-Assistant Button „Garagentor Öffnen“
-- ⚡ Sofortige Ausführung, auch während laufendem Zyklus
-- 🧠 Stabilere interne Ablaufsteuerung
 
-## Für wen ist das Update sinnvoll?
-- Nutzer, die das Tor **aus der Wohnung** öffnen möchten
-- Installationen ohne Home Assistant / nur Web-UI
-- Systeme mit Shelly-Ausgang
-- Nutzer mit AP- oder Standalone-Betrieb
+- 🌬️ Lüfter startet sofort beim Start des Zyklus
+- 🎯 Start ist klar als Hauptaktion positioniert
+- 🖥️ Verbesserte Web-UI mit prominenter Lüftungszeit
+- 📟 Erweiterte Display-Netzwerkanzeige
+- 🏠 MQTT Firmware-Sensor für Home Assistant
+
+## Technisches Update
+
+- Interne State-Machine bereinigt
+- AP-Timeout robuster umgesetzt
+- Verbesserte MQTT-Discovery-Stabilität
 
 ## Kompatibilität
+
 - Voll kompatibel zu v3.0.x
-- Keine Konfigurationsänderungen nötig
+- Keine Konfigurationsänderungen erforderlich
